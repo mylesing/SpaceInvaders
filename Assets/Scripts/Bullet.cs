@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public Transform bullet;
+    private Transform bullet;
     public float speed;
+    public AudioClip deathKnell;
 
     // Start is called before the first frame update
     void Start()
     {
         bullet = GetComponent<Transform> ();
+        //deathKnell = GetComponent<AudioSource>();
         speed = 0.5f;
     }
 
@@ -45,13 +47,16 @@ public class Bullet : MonoBehaviour
     */
 
     void OnTriggerEnter(Collider collider) {
-        Debug.Log("Impact!");
+        //Debug.Log("Impact!");
         if (collider.CompareTag("Alien")) {
-            Alien alien = collider.gameObject.GetComponent<Alien>();
-            alien.Die();
+            // Alien alien = collider.gameObject.GetComponent<Alien>();
+            // alien.Die();
+            Destroy(collider.gameObject);
             Destroy(gameObject);
+            //deathKnell.Play();
+            AudioSource.PlayClipAtPoint(deathKnell, gameObject.transform.position);
             Score.currScore += 10;
-            Debug.Log("IMPACT!");
+            //Debug.Log("SCORE: " + Score.currScore);
         } else if (collider.CompareTag("Bunker")) {
             Destroy(gameObject);
             

@@ -24,10 +24,12 @@ public class AlienBullet : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collider) {
+        //Debug.Log("IMPACT!");
         if (collider.CompareTag("Player")) {
             Destroy(collider.gameObject);
             Destroy(gameObject);
-
+            Debug.Log("IMPACT!");
+            
             GameOver.isPlayerDead = true;
         } else if (collider.CompareTag("Bunker")) {
             GameObject bunker = collider.gameObject;

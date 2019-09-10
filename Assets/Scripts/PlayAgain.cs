@@ -15,7 +15,7 @@ public class PlayAgain : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            //PlayerScore.playerScore = 0;
+            Score.currScore = 0;
             GameOver.isPlayerDead = false;
             SceneManager.LoadScene("Main");
         }

@@ -15,6 +15,8 @@ public class Bunker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float currScale = hp / 4.0f;
+        transform.localScale = new Vector3(transform.localScale.x, currScale, transform.localScale.z);
         if (hp <= 0) {
             Destroy(gameObject);
         }
