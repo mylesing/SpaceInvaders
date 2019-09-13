@@ -6,6 +6,7 @@ public class AlienBullet : MonoBehaviour
 {
     private Transform bullet;
     public float speed;
+    public GameObject explosion;
 
     // Start is called before the first frame update
     void Start()
@@ -23,13 +24,15 @@ public class AlienBullet : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collider) {
-        //Debug.Log("IMPACT!");
+    void OnCollisionEnter(Collision collision) {
+        Collider collider = collision.collider;
         if (collider.CompareTag("Player")) {
-            Destroy(collider.gameObject);
+            //Destroy(collider.gameObject);
+            Instantiate(explosion, gameObject.transform.position, Quaternion.AngleAxis(-90, Vector3.right));
+            collider.gameObject.SetActive(false);
             Destroy(gameObject);
-            Debug.Log("IMPACT!");
-            
+            Alien.speed = 0.0f;
+            Alien.fallRate = 1.0f;
             GameOver.isPlayerDead = true;
         } else if (collider.CompareTag("Bunker")) {
             GameObject bunker = collider.gameObject;
@@ -38,4 +41,21 @@ public class AlienBullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    // void OnTriggerEnter(Collider collider) {
+    //     //Debug.Log("IMPACT!");
+    //     if (collider.CompareTag("Player")) {
+    //         //Destroy(collider.gameObject);
+    //         collider.gameObject.SetActive(false);
+    //         Destroy(gameObject);
+    //         Alien.speed = 0.0f;
+    //         Alien.fallRate = 1.0f;
+    //         GameOver.isPlayerDead = true;
+    //     } else if (collider.CompareTag("Bunker")) {
+    //         GameObject bunker = collider.gameObject;
+    //         Bunker b = bunker.GetComponent<Bunker>();
+    //         b.hp -= 1;
+    //         Destroy(gameObject);
+    //     }
+    // }
 }

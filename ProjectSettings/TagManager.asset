@@ -7,6 +7,7 @@ TagManager:
   - Bullet
   - Bunker
   - Alien
+  - Ground
   layers:
   - Default
   - TransparentFX
