@@ -12,7 +12,6 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         bullet = GetComponent<Transform> ();
-        //deathKnell = GetComponent<AudioSource>();
         speed = 0.5f;
     }
 
@@ -35,48 +34,40 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter(Collision collision) {
         Collider collider = collision.collider;
         if (collider.CompareTag("Alien")) {
+            // boom!
+            AudioSource.PlayClipAtPoint(deathKnell, new Vector3(0, 3, 0));
+
+            // object gravity is on so it falls. bullet dies though
             collider.gameObject.GetComponent<Rigidbody>().useGravity = true;
             collider.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-            collider.gameObject.GetComponent<Transform>().parent = null;
             Destroy(gameObject);
+
+            // less aliens? speed up!!
             if (Alien.speed < 0) {
-                Alien.speed -= 0.002f;
+                Alien.speed -= 0.0015f;
             } else {
-                Alien.speed += 0.002f;
+                Alien.speed += 0.0015f;
             }
-            Score.currScore += 10;
+            
+            // don't add more score for hitting something twice u dingus
+            if (collider.gameObject.GetComponent<Transform>().parent != null) {
+                collider.gameObject.GetComponent<Transform>().parent = null;
+                Score.currScore += 10;
+            }
 
         // otherwise if the bullet hits our protection bunker get rid of that
+        } else if (collider.CompareTag("Ship")) {
+            Ship.numLives -= 1;
+            if (Ship.numLives == 0) {
+                collider.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                collider.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                Destroy(gameObject);
+            }
+            
+            Score.currScore += 30;
         } else if (collider.CompareTag("Bunker")) {
             Destroy(gameObject);
         }
     }
     
-
-    /*void OnTriggerEnter(Collider collider) {
-        if (collider.CompareTag("Alien")) {
-            // Alien alien = collider.gameObject.GetComponent<Alien>();
-            // alien.Die();
-            //Destroy(collider.gameObject);
-            //Alien a = collider.gameObject.GetComponent<Alien>();
-            collider.gameObject.GetComponent<Rigidbody>().useGravity = true;
-            //Debug.Log(collider.gameObject.GetComponent<Rigidbody>().
-            Destroy(gameObject);
-            //gameObject.GetComponent<Rigidbody>().useGravity = true;
-            //AudioSource.PlayClipAtPoint(deathKnell, gameObject.transform.position);
-            if (Alien.speed < 0) {
-                Alien.speed -= 0.005f;
-            } else {
-                Alien.speed += 0.005f;
-            }
-            
-            Score.currScore += 10;
-            //Debug.Log("SCORE: " + Score.currScore);
-        } else if (collider.CompareTag("Bunker")) {
-            Destroy(gameObject);
-            
-        } else {
-            Debug.Log("NO IMPACT!");
-        }
-    }*/
 }

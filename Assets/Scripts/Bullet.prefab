@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  deathKnell: {fileID: 8300000, guid: ac685971a114567478c6cbfd65db36bd, type: 3}
+  deathKnell: {fileID: 8300000, guid: a47b6d293ce74ee4bb18efaa0aa72732, type: 3}
 --- !u!135 &3022612328240042327
 SphereCollider:
   m_ObjectHideFlags: 0

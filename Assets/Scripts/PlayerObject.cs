@@ -8,13 +8,15 @@ public class PlayerObject : MonoBehaviour
     private Transform player;
 
     public GameObject shot;
+    public static int lives;
     //public Transform shotSpawn;
 
     // Start is called before the first frame update
     void Start()
     {
-        thrustSpeed = 0.03f;   
+        thrustSpeed = 0.06f;   
         player = GetComponent<Transform>();
+        lives = 3;
     }
 
     // Update is called once per frame

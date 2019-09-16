@@ -11,36 +11,29 @@ public class Alien : MonoBehaviour
 
     public GameObject shot;
     public Text winText;
+    public Text playAgain;
 
     // Start is called before the first frame update
     void Start()
     {
         alienMatrix = GetComponent<Transform> ();
         speed = 0.01f; 
-        fallRate = 0.98f;
+        fallRate = 0.9997f;
 
         winText.enabled = false;
-
-        foreach (Transform a in alienMatrix) {
-            
-        }
-
-        //InvokeRepeating("Update", 0.1f, 0.3f);
-        
+        playAgain.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(alienMatrix.childCount);
-        // // shift the alien matrix position
+        // shift the alien matrix position
         alienMatrix.position += Vector3.right * speed;
 
         foreach (Transform a in alienMatrix) {
 
-            if (a.position.x < -10 || a.position.x > 10) {
+            if (a.position.x < -12 || a.position.x > 12) {
                 // reverse the speed
-                Debug.Log(a.gameObject.name);
                 speed = -speed;
                 Vector3 shift = new Vector3(.0f, .02f, .0f);
                 alienMatrix.position += Vector3.down + shift;
@@ -51,16 +44,26 @@ public class Alien : MonoBehaviour
             if (Random.value > fallRate) {
                 Instantiate (shot, a.position, a.rotation);
             }
-        }
 
-        Debug.Log(alienMatrix.position.x);
-        if (alienMatrix.position.y <= -8) {
+            if (a.position.y <= -5) {
                 GameOver.isPlayerDead = true;
                 speed = 0.0f;
+                Ship.speed = 0.0f;
+                Ship.fallRate = 1.0f;
+                GetALife.fallRate = 1.0f;
+            }
         }
+
+        
 
         if (alienMatrix.childCount == 0) {
             winText.enabled = true;
+            playAgain.enabled = true;
+            speed = 0.0f;
+            fallRate = 1.0f;
+            Ship.speed = 0;
+            Ship.fallRate = 1.0f;
+            GetALife.fallRate = 1.0f;
         }
     }
     

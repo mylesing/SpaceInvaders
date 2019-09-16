@@ -124,3 +124,4 @@ MonoBehaviour:
   speed: 0
   explosion: {fileID: 2171921353816362246, guid: 328ca059d4c2fe24fb9331030022945f,
     type: 3}
+  deathKnell: {fileID: 8300000, guid: a47b6d293ce74ee4bb18efaa0aa72732, type: 3}
