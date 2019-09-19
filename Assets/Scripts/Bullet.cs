@@ -7,12 +7,14 @@ public class Bullet : MonoBehaviour
     private Transform bullet;
     public float speed;
     public AudioClip deathKnell;
+    public float d;
 
     // Start is called before the first frame update
     void Start()
     {
         bullet = GetComponent<Transform> ();
         speed = 0.5f;
+        d = 0.002f;
     }
 
     // 
@@ -26,7 +28,13 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Z)) {
+            d = 0.0015f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.H)) {
+            d = 0.002f;
+        }
     }
 
     // remove object hit AND bullet if the bullet collides with an alien
@@ -44,9 +52,9 @@ public class Bullet : MonoBehaviour
 
             // less aliens? speed up!!
             if (Alien.speed < 0) {
-                Alien.speed -= 0.0015f;
+                Alien.speed -= d;
             } else {
-                Alien.speed += 0.0015f;
+                Alien.speed += d;
             }
             
             // don't add more score for hitting something twice u dingus

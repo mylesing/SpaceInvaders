@@ -22,5 +22,9 @@ public class GetALife : MonoBehaviour
         if (Random.value > fallRate) {
             Instantiate (heart, pos, Quaternion.AngleAxis(0, Vector3.right));
         }
+
+        if (Input.GetKeyDown(KeyCode.H)) {
+            Instantiate (heart, pos, Quaternion.AngleAxis(0, Vector3.right));
+        }
     }
 }
